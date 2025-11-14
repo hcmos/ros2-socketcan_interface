@@ -161,3 +161,13 @@ void SocketcanInterface::_subscriber_callback(const socketcan_interface_msg::msg
     }
 }
 }
+
+int main(int argc, char ** argv)
+{
+    rclcpp::init(argc, argv);
+    rclcpp::NodeOptions options;
+    auto node = std::make_shared<socketcan_interface::SocketcanInterface>(options);
+    rclcpp::spin(node);
+    rclcpp::shutdown();
+    return 0;
+}
