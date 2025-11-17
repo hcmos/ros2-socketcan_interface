@@ -12,6 +12,10 @@ ament_auto_add_executable(socketcan_interface_node
         src/socketcan_interface_node.cpp
 )
 
+ament_target_dependencies(socketcan_interface_node
+        ament_index_cpp
+)
+
 ament_auto_package(
         INSTALL_TO_SHARE config
 )
