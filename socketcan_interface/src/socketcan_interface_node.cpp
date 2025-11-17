@@ -20,12 +20,14 @@ SocketcanInterface::SocketcanInterface(const rclcpp::NodeOptions &options) : Soc
 
 SocketcanInterface::SocketcanInterface(const std::string &name_space, const rclcpp::NodeOptions &options)
 : rclcpp::Node("socketcan_interface_node", name_space, options),
-if_name(get_parameter("if_name").as_string()),
 ignoreid_file_path(ament_index_cpp::get_package_share_directory("socketcan_interface")+"/config/"+"ignoreid.cfg")
 {
     using namespace std::chrono_literals;
 
-    declare_parameter("interval_ms", 1);
+    this->declare_parameter<std::string>("if_name", "can0");
+    this->declare_parameter<int64_t>("interval_ms", 1);
+
+    if_name = this->get_parameter("if_name").as_string();
     auto interval_ms = this->get_parameter("interval_ms").as_int();
 
     if ((s = socket(PF_CAN, SOCK_RAW, CAN_RAW)) < 0) {
